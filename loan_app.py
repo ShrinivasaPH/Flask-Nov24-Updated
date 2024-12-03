@@ -41,6 +41,6 @@ def predict():
         else:
             pred = 'Approved'
 
-        return {"loan_approval_status": pred}
+        return {"loan_approval_status:": pred}
     else:
         return "I will make the predictions."
