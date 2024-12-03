@@ -7,7 +7,7 @@ app = Flask(__name__)
 model_file = open("classifier.pkl", "rb")
 model = pickle.load(model_file)
 
-#Let's create endpoints..
+#Let's create endpoints....
 @app.route('/', methods=['GET'])
 def home():
     return "<h1>Loan Approval Application</h1>"
