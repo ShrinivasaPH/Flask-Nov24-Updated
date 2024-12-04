@@ -12,6 +12,14 @@ model = pickle.load(model_file)
 def home():
     return "<h1>Loan Approval Application</h1>"
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    return "Hey man, why are you pinging me?"
+
+@app.route('/aboutus', methods=['GET'])
+def aboutus():
+    return "We are the ML Ops learners..!!"
+
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     if request.method == 'POST':
