@@ -7,6 +7,8 @@ app = Flask(__name__)
 model_file = open("classifier.pkl", "rb")
 model = pickle.load(model_file)
 
+#Checking Git
+
 #Let's create endpoints....
 @app.route('/', methods=['GET'])
 def home():
