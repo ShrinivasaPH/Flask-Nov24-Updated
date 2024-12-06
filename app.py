@@ -1,52 +1,52 @@
 from flask import Flask, request
 import pickle
+from sklearn import sklearn
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, Srinivas!</p>"
+model_file = open("classifier.pkl", "rb")
+model = pickle.load(model_file)
 
-@app.route("/ping", methods=['GET'])
+#Let's create endpoints....
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Loan Approval Application</h1>"
+
+@app.route('/ping', methods=['GET'])
 def ping():
-    return "<p>Hey man! why are pinging me</p>"
+    return "Hey man, why are you pinging me?"
 
-@app.route("/aboutus", methods=['GET'])
+@app.route('/aboutus', methods=['GET'])
 def aboutus():
-    return "<p>We are Mlops learners</p>"
+    return "We are the ML Ops learners..!!"
 
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if request.method == 'POST':
 
-model_pickle = open("classifier.pkl", "rb")
-clf = pickle.load(model_pickle)
+        loan_req = request.get_json()
 
-# defining the endpoint which will make the prediction
-@app.route("/prediction", methods=['POST'])
-def prediction():
-    """ Returns loan application status using ML model
-    """
-    loan_req = request.get_json()
-    print(loan_req)
-    if loan_req['Gender'] == "Male":
-        Gender = 0
+        if loan_req['Gender'] == 'Male':
+            Gender = 0
+        else:
+            Gender = 1
+
+        if loan_req['Married'] == 'No':
+            Married = 0
+        else:
+            Married = 1
+        
+        ApplicantIncome = loan_req['ApplicantIncome']
+        LoanAmount = loan_req['LoanAmount']
+        Credit_History = loan_req['Credit_History']
+
+        result = model.predict([[Gender, Married, ApplicantIncome, LoanAmount, Credit_History]])
+
+        if result == 0:
+            pred = 'Rejected'
+        else:
+            pred = 'Approved'
+
+        return {"loan_approval_status:": pred}
     else:
-        Gender = 1
-    if loan_req['Married'] == "Unmarried":
-        Married = 0
-    else:
-        Married = 1
-    if loan_req['Credit_History'] == "Unclear Debts":
-        Credit_History = 0
-    else:
-        Credit_History = 1
-
-    ApplicantIncome = loan_req['ApplicantIncome']
-    LoanAmount = loan_req['LoanAmount']
-
-    result = clf.predict([[Gender, Married, ApplicantIncome, LoanAmount, Credit_History]])
-
-    if result == 0:
-        pred = "Rejected"
-    else:
-        pred = "Approved"
-
-    return {"loan_approval_status": pred}
+        return "I will make the predictions."
