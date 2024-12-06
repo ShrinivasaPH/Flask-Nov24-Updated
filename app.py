@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, Shivank!</p>"
+    return "<p>Hello, Srinivas!</p>"
 
 @app.route("/ping", methods=['GET'])
 def ping():
