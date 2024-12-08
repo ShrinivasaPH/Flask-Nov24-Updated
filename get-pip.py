@@ -15,7 +15,7 @@
 # we basically include an entire copy of pip inside this blob. We do this
 # because the alternatives are attempt to implement a "minipip" that probably
 # doesn't do things correctly and has weird edge cases, or compress pip itself
-# down into a single file.
+# down into a single file. 
 #
 # If you're wondering how this is created, it is generated using
 # `scripts/generate.py` in https://github.com/pypa/get-pip.
